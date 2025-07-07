@@ -1,0 +1,40 @@
+it and engineering tab
+
+<script>
+	$(document).ready(function() {
+    const selectedCategory = $('#category').val();
+    if (selectedCategory === 'IT') {
+        $("#search").val(''); 
+        $("#region").val('_'); 
+        search_();
+    }
+    $('#category').on('change', function () {
+        search_();
+    });
+
+    $('#region').on('change', function () {
+        search_();
+    });
+    
+    $('#search').on('input', function() {
+        var search = $("#search").val();
+        search_();
+    });
+});
+function search_() {
+    var search = $("#search").val();
+    var region = $("#region").val();
+    var category = $("#category").val();
+    if (search == '') { search = '_'; }
+    $.ajax({
+        type: "POST",
+        url: "https://jobs.globalnet.com.mm/search/search.php",
+        data: { search: search, region: region, category: category },
+        cache: false,
+        success: function(data) {
+            document.getElementById("md").innerHTML = data;
+        }
+    });
+
+	}
+</script>
